@@ -1,134 +1,151 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Theme toggle functionality
-    const toggle = document.getElementById("theme-toggle");
+    const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const icon = themeToggle.querySelector('i');
     
-    if (localStorage.getItem("theme") === "dark") {
-        body.classList.add("dark-mode");
-        toggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+    // Check if user has a theme preference stored
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Apply the theme
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-mode');
+        icon.classList.replace('fa-moon', 'fa-sun');
     }
     
-    toggle.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
-        const icon = toggle.querySelector("i");
-
-        if (body.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            icon.classList.replace("fa-moon", "fa-sun");
-            document.body.style.letterSpacing = "2pt"; 
+    // Toggle theme when button is clicked
+    themeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        
+        // Update icon
+        if (body.classList.contains('dark-mode')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('theme', 'dark');
         } else {
-            localStorage.setItem("theme", "light");
-            icon.classList.replace("fa-sun", "fa-moon");
-            document.body.style.letterSpacing = "normal";
-            
-            // Force refresh of styles
-            setTimeout(() => {
-                document.body.style.transition = "background 0.3s ease";
-            }, 50);
+            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('theme', 'light');
         }
     });
     
     // Typing animation
-    const textElement = document.getElementById("typing-text");
-    const texts = ["Front End Developer", "Web Designer"];
-    let index = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    
-    function type() {
-        let currentText = texts[index];
-        textElement.innerHTML = currentText.substring(0, charIndex) + "<span class='cursor'>|</span>";
+    const typingElement = document.getElementById('typing-text');
+    if (typingElement) {
+        const texts = ['Front-End Developer', 'Web Designer', 'Computer Science Student', 'Programmer'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
         
-        if (!isDeleting && charIndex < currentText.length) {
-            charIndex++;
-            setTimeout(type, 100);
-        } else if (isDeleting && charIndex > 0) {
-            charIndex--;
-            setTimeout(type, 50);
-        } else {
-            isDeleting = !isDeleting;
-            if (!isDeleting) index = (index + 1) % texts.length;
-            setTimeout(type, 1000);
+        function typeText() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                // Remove a character
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                // Add a character
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+            
+            // If word is complete
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typeSpeed = 1000; // Pause at end
+            }
+            
+            // If deletion is complete
+            if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500; // Pause before typing next word
+            }
+            
+            setTimeout(typeText, typeSpeed);
         }
+        
+        // Start the typing animation
+        setTimeout(typeText, 1000);
     }
     
-    type();  
-    
-    // Improved navigation functionality
-    const navLinks = document.querySelectorAll('nav ul li a');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
             
-            const targetId = this.getAttribute('href').substring(1);
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
             
-            // Scroll to section with precise positioning
-            const targetElement = document.getElementById(targetId);
-            const headerHeight = document.querySelector('header').offsetHeight;
-            
-            window.scrollTo({
-                top: targetElement.offsetTop - headerHeight,
-                behavior: 'auto' // Use 'auto' for instant scrolling
-            });
-            
-            // Update active navigation item
-            navLinks.forEach(navLink => {
-                navLink.classList.remove('active');
-            });
-            this.classList.add('active');
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+                
+                // Update active link
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            }
         });
     });
     
-    // Set active section on page load and scroll
-    function setActiveSection() {
-        const scrollPosition = window.scrollY;
-        const headerHeight = document.querySelector('header').offsetHeight;
+    // Update active menu item on scroll
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
         
-        // Find which section is currently in view
-        document.querySelectorAll('section').forEach(section => {
-            const sectionTop = section.offsetTop - headerHeight - 5;
-            const sectionBottom = sectionTop + section.offsetHeight;
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
             
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                const id = section.getAttribute('id');
-                
-                // Update active navigation item
-                navLinks.forEach(navLink => {
-                    navLink.classList.remove('active');
-                    if (navLink.getAttribute('href') === '#' + id) {
-                        navLink.classList.add('active');
-                    }
-                });
+            if (window.pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // Animate skill bars on scroll
+    const skillCircles = document.querySelectorAll('.skill-circle');
+    
+    function animateSkills() {
+        skillCircles.forEach(circle => {
+            const progress = circle.getAttribute('data-progress');
+            const progressBar = circle.querySelector('.progress-fill');
+            
+            if (isElementInViewport(circle) && !progressBar.style.width) {
+                progressBar.style.width = `${progress}%`;
             }
         });
     }
     
-    // Initial check for active section
-    setActiveSection();
+    // Check if element is in viewport
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0
+        );
+    }
     
-    // Update active section on scroll
-    window.addEventListener('scroll', setActiveSection);
+    // Run animation on scroll
+    window.addEventListener('scroll', animateSkills);
     
-    // Skills hover effect
-    const skills = document.querySelectorAll(".skill-circle");
-    skills.forEach(skill => {
-        skill.addEventListener("mouseenter", () => {
-            skill.style.background = "#ff69b4";
-        });
-        skill.addEventListener("mouseleave", () => {
-            skill.style.background = "";
-        });
-    });
-    
-    // Skill progress initialization
-    document.querySelectorAll(".skill-circle").forEach((circle) => {
-        let progress = circle.getAttribute("data-progress");
-        let progressBar = circle.querySelector(".progress-fill");
-        setTimeout(() => {
-            progressBar.style.width = progress + "%";
-        }, 500);
-    });
+    // Initial call to animate skills that are already visible
+    animateSkills();
     
     // Contact form handling
     const contactForm = document.querySelector("#contact .contact-form");
@@ -150,34 +167,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-    
-    // Text analyzer functionality
-    window.analyzeText = function() {
-        const inputText = document.getElementById("inputText").value;
-        const output = document.getElementById("output");
-        
-        if (!inputText) {
-            output.textContent = "Please enter some text to analyze.";
-            return;
-        }
-        
-        const wordCount = inputText.split(/\s+/).filter(word => word.length > 0).length;
-        const charCount = inputText.length;
-        const charCountNoSpaces = inputText.replace(/\s+/g, "").length;
-        const sentences = inputText.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
-        const paragraphs = inputText.split(/\n+/).filter(para => para.trim().length > 0).length;
-        
-        let result = `Word Count: ${wordCount}\n`;
-        result += `Character Count (with spaces): ${charCount}\n`;
-        result += `Character Count (without spaces): ${charCountNoSpaces}\n`;
-        result += `Sentence Count: ${sentences}\n`;
-        result += `Paragraph Count: ${paragraphs}\n`;
-        
-        if (wordCount > 0) {
-            const avgWordLength = charCountNoSpaces / wordCount;
-            result += `Average Word Length: ${avgWordLength.toFixed(2)} characters\n`;
-        }
-        
-        output.textContent = result;
-    };
 });

@@ -1,30 +1,51 @@
 //ques2
-window.addEventListener("load", () => {
-    console.log(`${new Date().toISOString()} , view , page-load`);
-  });
-   function getElementType(tag, target) {
-    switch (tag) {
-      case "p": return "text";
-      case "img": return "image";
-      case "a": return "hyperlink";
-      case "li": return "list-item";
-      case "button": return "button";
-      case "h1":
-      case "h2":
-      case "h3": return "heading";
-      case "select": return "drop-down";
-      case "input":
-        if (target.type === "checkbox") return "checkbox";
-        if (target.type === "radio") return "radio-button";
-        return "input-field";
-      case "div": return "container";
-      default: return "unknown";
-    }
-  }
-  document.addEventListener("click", function (event) {
-    const tag = event.target.tagName.toLowerCase();
-    const type = getElementType(tag, event.target);
+document.addEventListener("DOMContentLoaded", function () {
+    // Track all click events
+    document.addEventListener('click', function(e) {
+        const target = e.target;
+        const tagName = target.tagName.toLowerCase();
+        const className = target.className;
+        const timestamp = new Date().toISOString();
+        
+        // Identify the type of element clicked
+        let objectType = tagName;
+        if (className) {
+            objectType += ` (class: ${className})`;
+        }
+        if (target.id) {
+            objectType += ` (id: ${target.id})`;
+        }
+        
+        console.log(`${timestamp}, click, ${objectType}`);
+    });
+    
+    // Track page view on load
     const timestamp = new Date().toISOString();
-    console.log(`${timestamp} , click , ${type}`);
-  });
-  
+    console.log(`${timestamp}, view, page load`);
+    
+    // Track element views using Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const tagName = target.tagName.toLowerCase();
+                const timestamp = new Date().toISOString();
+                let objectType = tagName;
+                
+                if (target.className) {
+                    objectType += ` (class: ${target.className})`;
+                }
+                if (target.id) {
+                    objectType += ` (id: ${target.id})`;
+                }
+                
+                console.log(`${timestamp}, view, ${objectType}`);
+            }
+        });
+    });
+    
+    // Observe section elements and other important elements
+    document.querySelectorAll('section, header, footer, .profile-img, .about-img, .skill-circle, .card, .timeline-item').forEach(el => {
+        observer.observe(el);
+    });
+});

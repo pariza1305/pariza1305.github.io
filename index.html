@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pariza - Personal Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <!-- Fixed favicon paths to ensure they're visible in the browser tab -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="shortcut icon" href="./favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    <script>
-        localStorage.removeItem('theme');
-        document.body.classList.remove('dark-mode');
-      </script>
 </head>
 <body>
     <header>
@@ -26,9 +24,10 @@
                     <li><a href="#Skills">Skills</a></li>
                     <li><a href="#Qualification">Qualifications</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#text-analyzer">Text Analyzer</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle">
+            <button id="theme-toggle" aria-label="Toggle dark mode">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
@@ -247,39 +246,226 @@
         </div>
     </section>
     
-    <!-- Text Analyzer Section with improved alignment -->
+    <!-- Text Analyzer Section with improved alignment and reset button -->
     <section id="text-analyzer" class="analyzer-section">
         <div class="section-header">
             <h2>Text Analyzer</h2>
+            <p>Analyze your text for letters, words, spaces, special symbols, pronouns, prepositions, and articles</p>
         </div>
-        <textarea id="inputText" placeholder="Paste 10,000+ words here..."></textarea>
-        <button onclick="analyzeText()">Analyze Text</button>
+        <div class="analyzer-controls">
+            <textarea id="inputText" placeholder="Paste 10,000+ words here..."></textarea>
+            <div class="button-group">
+                <button onclick="analyzeText()" class="analyze-btn">Analyze Text</button>
+                <button onclick="resetAnalysis()" class="reset-btn">Reset Analysis</button>
+            </div>
+        </div>
         <div id="output-container">
             <h3>Analysis Result:</h3>
-            <pre id="output"></pre>
+            <div class="results-grid">
+                <div class="result-box">
+                    <h4>Character Analysis</h4>
+                    <div id="char-analysis"></div>
+                </div>
+                <div class="result-box">
+                    <h4>Pronouns</h4>
+                    <div id="pronoun-analysis"></div>
+                </div>
+                <div class="result-box">
+                    <h4>Prepositions</h4>
+                    <div id="preposition-analysis"></div>
+                </div>
+                <div class="result-box">
+                    <h4>Indefinite Articles</h4>
+                    <div id="article-analysis"></div>
+                </div>
+            </div>
         </div>
     </section>
     
-    <!-- Social Icons with improved positioning -->
-    <div class="social-icons">
-        <a href="https://github.com/pariza1305" target="_blank" class="icon github">
-            <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="icon linkedin">
-            <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="mailto:parizagoyal@gmail.com" class="icon gmail">
-            <i class="fas fa-envelope"></i>
-        </a>
-        <a href="https://www.instagram.com/pariza_1305/?hl=en" target="_blank" class="icon instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-    </div>
+    <!-- Footer section added for better structure -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PARIZA. All rights reserved.</p>
+            <!-- Social Icons with improved positioning -->
+            <div class="social-icons">
+                <a href="https://github.com/pariza1305" target="_blank" class="icon github" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/pariza-goyal-3a8245360/" target="_blank" class="icon linkedin" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://outlook.office.com/mail/pariza.pariza@students.iiit.ac.in" class="icon gmail" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/pariza_1305/?hl=en" target="_blank" class="icon instagram" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="script.js"></script>
     <script src="script2.js"></script>
     <script src="script3.js"></script>
+    
+    <!-- Event tracking script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track all click events
+            document.addEventListener('click', function(e) {
+                const target = e.target;
+                const tagName = target.tagName.toLowerCase();
+                const className = target.className;
+                const timestamp = new Date().toISOString();
+                
+                // Identify the type of element clicked
+                let objectType = tagName;
+                if (className) {
+                    objectType += ` (class: ${className})`;
+                }
+                if (target.id) {
+                    objectType += ` (id: ${target.id})`;
+                }
+                
+                console.log(`${timestamp}, click, ${objectType}`);
+            });
+            
+            // Track page view on load
+            const timestamp = new Date().toISOString();
+            console.log(`${timestamp}, view, page load`);
+            
+            // Track element views using Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const tagName = target.tagName.toLowerCase();
+                        const timestamp = new Date().toISOString();
+                        let objectType = tagName;
+                        
+                        if (target.className) {
+                            objectType += ` (class: ${target.className})`;
+                        }
+                        if (target.id) {
+                            objectType += ` (id: ${target.id})`;
+                        }
+                        
+                        console.log(`${timestamp}, view, ${objectType}`);
+                    }
+                });
+            });
+            
+            // Observe section elements and other important elements
+            document.querySelectorAll('section, header, footer, .profile-img, .about-img, .skill-circle, .card, .timeline-item').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+    
+    <!-- Text analyzer script -->
+    <script>
+        function analyzeText() {
+            const text = document.getElementById('inputText').value;
+            
+            if (!text) {
+                alert("Please enter text to analyze");
+                return;
+            }
+            
+            // 1. Calculate letters, words, spaces, newlines, and special symbols
+            const letters = (text.match(/[a-zA-Z]/g) || []).length;
+            const words = text.trim().split(/\s+/).length;
+            const spaces = (text.match(/\s/g) || []).length;
+            const newlines = (text.match(/\n/g) || []).length;
+            const specialSymbols = (text.match(/[^\w\s]/g) || []).length;
+            
+            // 2. Count pronouns
+            const pronouns = [
+                'i', 'me', 'my', 'mine', 'myself',
+                'you', 'your', 'yours', 'yourself',
+                'he', 'him', 'his', 'himself',
+                'she', 'her', 'hers', 'herself',
+                'it', 'its', 'itself',
+                'we', 'us', 'our', 'ours', 'ourselves',
+                'they', 'them', 'their', 'theirs', 'themselves',
+                'this', 'that', 'these', 'those',
+                'who', 'whom', 'whose'
+            ];
+            
+            // 3. Count prepositions
+            const prepositions = [
+                'about', 'above', 'across', 'after', 'against', 'along', 'amid', 'among', 'around', 'at',
+                'before', 'behind', 'below', 'beneath', 'beside', 'between', 'beyond', 'by',
+                'concerning', 'considering', 'despite', 'down', 'during',
+                'except', 'for', 'from', 'in', 'inside', 'into',
+                'like', 'near', 'of', 'off', 'on', 'onto', 'out', 'outside', 'over',
+                'past', 'regarding', 'round', 'since', 'through', 'throughout', 'to', 'toward', 'under', 'underneath',
+                'until', 'unto', 'up', 'upon', 'with', 'within', 'without'
+            ];
+            
+            // 4. Count indefinite articles
+            const indefiniteArticles = ['a', 'an'];
+            
+            // Process the text
+            const allWords = text.toLowerCase().match(/\b\w+\b/g) || [];
+            
+            // Count occurrences
+            const pronounCount = {};
+            const prepositionCount = {};
+            const articleCount = {};
+            
+            allWords.forEach(word => {
+                if (pronouns.includes(word)) {
+                    pronounCount[word] = (pronounCount[word] || 0) + 1;
+                }
+                if (prepositions.includes(word)) {
+                    prepositionCount[word] = (prepositionCount[word] || 0) + 1;
+                }
+                if (indefiniteArticles.includes(word)) {
+                    articleCount[word] = (articleCount[word] || 0) + 1;
+                }
+            });
+            
+            // Display results
+            document.getElementById('char-analysis').innerHTML = `
+                <p>Letters: ${letters}</p>
+                <p>Words: ${words}</p>
+                <p>Spaces: ${spaces}</p>
+                <p>Newlines: ${newlines}</p>
+                <p>Special Symbols: ${specialSymbols}</p>
+            `;
+            
+            // Display pronouns
+            let pronounHTML = '';
+            for (const [pronoun, count] of Object.entries(pronounCount)) {
+                pronounHTML += `<p>${pronoun}: ${count}</p>`;
+            }
+            document.getElementById('pronoun-analysis').innerHTML = pronounHTML || 'No pronouns found';
+            
+            // Display prepositions
+            let prepositionHTML = '';
+            for (const [preposition, count] of Object.entries(prepositionCount)) {
+                prepositionHTML += `<p>${preposition}: ${count}</p>`;
+            }
+            document.getElementById('preposition-analysis').innerHTML = prepositionHTML || 'No prepositions found';
+            
+            // Display articles
+            let articleHTML = '';
+            for (const [article, count] of Object.entries(articleCount)) {
+                articleHTML += `<p>${article}: ${count}</p>`;
+            }
+            document.getElementById('article-analysis').innerHTML = articleHTML || 'No indefinite articles found';
+        }
+
+        function resetAnalysis() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('char-analysis').innerHTML = '';
+            document.getElementById('pronoun-analysis').innerHTML = '';
+            document.getElementById('preposition-analysis').innerHTML = '';
+            document.getElementById('article-analysis').innerHTML = '';
+        }
+    </script>
 </body>
 </html>
