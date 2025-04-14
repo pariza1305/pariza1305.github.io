@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pariza - Personal Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <script>
+        localStorage.removeItem('theme');
+        document.body.classList.remove('dark-mode');
+      </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h2 class="logo">PARIZA</h2>
+            <nav>
+                <ul>
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#Skills">Skills</a></li>
+                    <li><a href="#Qualification">Qualifications</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero Section with improved spacing -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <img src="me.jpeg" alt="profile" class="profile-img">
+            <h1>PARIZA</h1>
+            <p>I am a <span id="typing-text"></span></p>
+            <p>B.Tech student at IIIT Hyderabad</p>
+            <a href="RESUME .pdf" class="cta-button" download>RESUME </a>
+        </div>
+    </section>
+    
+    <!-- About Section with improved structure -->
+    <section id="about" class="about-section">
+        <div class="section-header">
+            <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-main">
+                <div class="about-image">
+                    <img src="me1.jpeg" alt="Pariza" class="about-img">
+                </div>
+                <div class="about-text">
+                    <p>Hey there👋🏻, I'm <strong>PARIZA</strong> a 19 year-old-engineering student 👩🏻‍💻currently pursuing Computer Science and Engineering at IIITH. I'm a passionate ✨Front-End Developer and Web Designer. I possess a strong foundation in my field of study 📚, combined with a passion for continuous learning and a desire to make a meaningful impact. In addition to my academic pursuits, I have a keen interest in exploring 🌍 new places .</p>
+                    <div class="know-more">
+                        <a href="RESUME .pdf" class="cta-button" download>Know More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Birthplace Section with improved alignment -->
+    <section id="place" class="Birthplace">
+        <div class="section-header">
+            <h3>My Birthplace – Patiala, Punjab 🏡</h3>
+        </div>
+        <div class="birthplace-gallery">
+            <div class="scroll-gallery">
+                <div class="scroll-track">
+                    <img src="patiala.jpeg" alt="patiala" />
+                    <img src="map.jpeg" alt="map" />
+                    <img src="main.jpeg" alt="main" />
+                    <img src="kaliMata.jpeg" alt="kaliMata" />
+                    <img src="sheeshMahal.jpeg" alt="sheeshMahal" />
+                    <img src="club.jpeg" alt="club" />
+                    <!-- Duplicate for loop effect -->
+                    <img src="patiala.jpeg" alt="patiala" />
+                    <img src="map.jpeg" alt="map" />
+                    <img src="main.jpeg" alt="main" />
+                    <img src="kaliMata.jpeg" alt="kaliMata" />
+                    <img src="sheeshMahal.jpeg" alt="sheeshMahal" />
+                    <img src="club.jpeg" alt="club" />
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Technical Skills Section with improved structure -->
+    <section id="Skills" class="skills-section">
+        <div class="section-header">
+            <h2>Technical Skills</h2>
+            <i class="icon">🧩</i>
+        </div>
+        <div class="skills-container">
+            <div class="skill-circle c-cpp" data-progress="90">
+                <i class="fab fa-cuttlefish"></i>
+                <span>C / C++</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+            <div class="skill-circle python" data-progress="80">
+                <i class="fab fa-python"></i>
+                <span>Python</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+            <div class="skill-circle js" data-progress="75">
+                <i class="fab fa-js"></i>
+                <span>JavaScript</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+            <div class="skill-circle html" data-progress="85">
+                <i class="fab fa-html5"></i>
+                <span>HTML</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+            <div class="skill-circle css" data-progress="70">
+                <i class="fab fa-css3-alt"></i>
+                <span>CSS</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Personal Skills Section with improved containers -->
+    <section id="personal-skills">
+        <div class="section-header">
+            <h1 class="title">My<span class="highlight">Skills</span></h1>
+        </div>
+        <div class="container cards">
+            <div class="card">
+                <div class="icon">💃🏻</div>
+                <h2>DANCE</h2>
+                <p>My fondness for dance dates back to childhood.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🏸</div>
+                <h2>BADMINTON</h2>
+                <p>Whenever free and want to play some outdoor sport, I prefer playing badminton.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎨</div>
+                <h2>Drawing</h2>
+                <p>Art, with its transcendent power, has the ability to evoke emotions and ignite the imagination.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Qualifications Section with improved spacing -->
+    <section id="Qualification" class="qualifications-section">
+        <div class="section-header">
+            <h1>Qualifications</h1>
+            <h2>My Educational Qualification</h2>
+        </div>
+
+        <div class="education-title">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Education</h3>
+        </div>
+
+        <div class="timeline">
+            <!-- B.Tech CSE -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>B.Tech CSE</h4>
+                    <h5>International Institute of Information Technology</h5>
+                    <div class="date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>2024 - 2028</span>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- Senior Secondary School -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Senior Secondary School</h4>
+                    <h5>DAV Public School, Patiala</h5>
+                    <div class="date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>2022 - 2024</span>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- Secondary School -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Secondary School</h4>
+                    <h5>St. Peter's Academy, Patiala</h5>
+                    <div class="date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>2010 - 2022</span>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section with improved structure -->
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2>Contact Me</h2>
+            <p>I'd love to hear from you! Please fill out the form below to get in touch ❤️</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-item">
+                    <span class="icon">📧</span>
+                    <div>
+                        <strong>Email</strong>
+                        <p>pariza.pariza@students.iiit.ac.in</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📷</span>
+                    <div>
+                        <strong>Instagram</strong>
+                        <p>@pariza_1305</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <div>
+                        <strong>Location</strong>
+                        <p>Hyderabad, India</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Name" required />
+                    <input type="email" placeholder="Email" required />
+                </div>
+                <input type="text" placeholder="Subject" required />
+                <textarea placeholder="Message" rows="6" required></textarea>
+                <button type="submit">Send Message <span class="send-icon">➤</span></button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Text Analyzer Section with improved alignment -->
+    <section id="text-analyzer" class="analyzer-section">
+        <div class="section-header">
+            <h2>Text Analyzer</h2>
+        </div>
+        <textarea id="inputText" placeholder="Paste 10,000+ words here..."></textarea>
+        <button onclick="analyzeText()">Analyze Text</button>
+        <div id="output-container">
+            <h3>Analysis Result:</h3>
+            <pre id="output"></pre>
+        </div>
+    </section>
+    
+    <!-- Social Icons with improved positioning -->
+    <div class="social-icons">
+        <a href="https://github.com/pariza1305" target="_blank" class="icon github">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="icon linkedin">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="mailto:parizagoyal@gmail.com" class="icon gmail">
+            <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://www.instagram.com/pariza_1305/?hl=en" target="_blank" class="icon instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
+    <script src="script3.js"></script>
+</body>
+</html>
